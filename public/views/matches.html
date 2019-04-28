@@ -1,0 +1,98 @@
+<style text="stylesheet/css">
+  body {
+    background: #f5f5f5;
+  }
+
+  .match-div {
+    background: white;
+    cursor: pointer;
+    transition: all 0.5s;
+    color: black;
+    text-decoration: none;
+  }
+
+  .match-div:hover {
+    border-color: rgb(26, 52, 54);
+  }
+
+  .vs {
+    font-size: 120%;
+    font-weight: bold;
+  }
+</style>
+
+<div ng-controller="matchesController" ng-init="fetchMatchesData()" class="text-center">
+  <div class="row">
+    <div class="columns large-12 small-12">
+
+      <h2 class="text-center">Welcome to cricket Rocks</h2>
+      <h4 class="text-center">We show live scores :)</h4>
+      <div class="wrapper">
+        <div class="new-matches">
+            Upcoming Matches
+            <div class="match-div callout" ng-repeat="match in comingMatches">
+              <a href="/match/{{match._id}}">
+              <div class="vs">{{match.team_1.name}} V/S {{match.team_2.name}}</div>
+              </a>
+            </div>
+        </div>
+        <hr>
+        <div class="live-matches">
+          Live Matches
+          <div class="match-div callout" ng-repeat="match in liveMatches">
+            <a href="/match/{{match._id}}">
+            <div class="vs">{{match.team_1.name}} V/S {{match.team_2.name}}</div>
+            <div class='score'>
+              {{match.currentStatus.playingTeam.name}}: {{match.currentStatus.totalScore}} -
+              {{match.currentStatus.totalWickets}} (
+              {{match.currentStatus.overNumber ? match.currentStatus.overNumber - 1: 0}}.{{match.currentStatus.ballNumber}} )overs
+            </div>
+            <div class="score">
+              <div ng-if="match.currentStatus.opponentTeam.hasBat">
+                {{match.currentStatus.opponentTeam.name}}: {{match.currentStatus.opponentTeam.totalScore}} -
+                {{match.currentStatus.opponentTeam.totalWickets}}
+              </div>
+              <div ng-if="!match.currentStatus.opponentTeam.hasBat">
+                {{match.currentStatus.opponentTeam.name}}: Yet to play
+              </div>
+            </div>
+            <div class='toss'>
+              {{match.tossWinner.name}} won toss and choose to {{match.tossWinnerSelection}}
+            </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="old-matches">
+        Old Matches
+        <div class="match-div callout" ng-repeat="match in playedMatches">
+          <a href="/match/{{match._id}}">
+            <div class="vs">{{match.team_1.name}} V/S {{match.team_2.name}}</div>
+            <div class="result">
+              <div ng-if="result.tie">
+                Match tied
+              </div>
+              <div ng-if="!result.tie">
+                {{match.result.won}} won by {{match.result.by}}
+              </div>
+            </div>
+            <div class='score'>
+              {{match.currentStatus.playingTeam.name}}: {{match.currentStatus.totalScore}} -
+              {{match.currentStatus.totalWickets}} (
+              {{match.currentStatus.overNumber}}.{{match.currentStatus.ballNumber}})
+            </div>
+            <div class="score">
+              {{match.currentStatus.opponentTeam.name}}: {{match.currentStatus.opponentTeam.totalScore}} -
+              {{match.currentStatus.opponentTeam.totalWickets}}
+            </div>
+            <div class='toss'>
+              {{match.tossWinner.name}} won toss and choose to {{match.tossWinnerSelection}}
+            </div>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>

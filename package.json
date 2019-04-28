@@ -1,0 +1,29 @@
+{
+  "name": "kishanapp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "debug": "nodemon --inspect app.js",
+    "develop": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "bower": "^1.8.8",
+    "express": "^4.16.3",
+    "lodash": "^4.17.11",
+    "mongoose": "^5.0.11",
+    "request": "^2.88.0",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [],
+  "bugs": {},
+  "description": ""
+}

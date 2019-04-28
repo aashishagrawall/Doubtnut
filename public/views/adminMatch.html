@@ -1,0 +1,233 @@
+<style>
+    body {
+        background: #cecece;
+    }
+
+    .wrapper {
+        background: white;
+        padding: 20px;
+    }
+
+    .player-columns {
+        padding: 10px;
+        border: 1px solid;
+    }
+
+    .match-box {
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+        border: 1px solid;
+    }
+</style>
+
+<div ng-controller="adminMatchController" ng-init="fetchmatchDetails()" class="text-center">
+    <div class="row expanded wrapper">
+
+        <div class="columns large-12 small-12" ng-show="!matchData.tossWinner">
+
+            <h2 class="text-center">Select toss Winner (Please select and assign fields no error checking is done)</h2>
+            <div class="wrapper">
+                <div class="row">
+                    <div class="columns medium-4">
+                        <h3>{{matchData.team_1.name}} VS</h3>
+                    </div>
+                    <div class="columns medium-4">
+                        <h3> VS</h3>
+                    </div>
+
+                    <div class="columns medium-4">
+                        <h3>{{matchData.team_2.name}}</h3>
+                    </div>
+                    <div class="columns medium-6">
+                        <label>Toss Winner
+                            <select ng-model="tossWinner">
+
+                                <option value="{{matchData.team_1._id}}">{{matchData.team_1.name}}</option>
+                                <option value="{{matchData.team_2._id}}">{{matchData.team_2.name}}</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-6">
+                        <label>Toss Selection
+                            <select ng-model="tossWinnerSelection">
+
+                                <option value="bat">Bat</option>
+                                <option value="ball">Ball</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+
+                    <div class="text-center" style="margin:auto">
+                        <button type="button" class="success button large text-center"
+                            ng-click="SubmitTossData()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="columns large-12 small-12">
+
+            <h2 class="text-center">Update Match status Not all functionality are added</h2>
+            <div class="wrapper">
+                <div class="row">
+                        
+                    <div class="columns medium-6">
+                        <h3>current batting team == {{battingTeam.name}} </h3>
+                    </div>
+                    <div class="columns medium-6">
+                        <h3>current bowling team == {{ballingTeam.name}}</h3>
+                    </div>
+                    <div class="columns medium-12">
+                            <h3>currentScore {{currentScore.totalRun}} / {{currentScore.totalWicket}}--- totalBall {{totalBalls}}</h3>
+                        </div>
+                    <div class="columns medium-4">
+                        <label>striker
+                            <select ng-model="striker">
+
+                                    <option value="{{player.playerId._id}}" ng-repeat="player in battingTeam.players">{{player.playerId.name}}</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-4">
+                        <label>Non Striker
+                            <select ng-model="nonStriker">
+
+                                <option value="{{player.playerId._id}}" ng-repeat="player in battingTeam.players">{{player.playerId.name}}</option>
+                                
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+
+                    <div class="columns medium-4">
+                        <label>Bowler
+                            <select ng-model="bowler">
+
+                                    <option value="{{player.playerId._id}}" ng-repeat="player in ballingTeam.players">{{player.playerId.name}}</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-6">
+                        <label>Runs
+                            <input type="number" ng-model="runScored" />
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-6">
+                        <label>runs Reason
+                            <select ng-model="runReson">
+
+                                <option value="run">run</option>
+                                <option value="four">four</option>
+                                <option value="six">six</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+
+                    <div class="columns medium-6">
+                        <label> Extra Runs
+                            <input type="number" ng-model="extrasScored" />
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-6">
+                        <label>Extra runs Reason
+                            <select ng-model="extraReason">
+
+                                <option value="noball">noball</option>
+                                <option value="legby">legby</option>
+                                <option value="wide">wide</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-3">
+                        <label> is wicket taken
+                            <select ng-model="isWicketTaken">
+                                <option value=false>false</option>
+                                <option value="true">true</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-3">
+                        <label> Player who is out
+                            <select ng-model="playerOut">
+                                    <option value="{{player.playerId._id}}" ng-repeat="player in battingTeam.players">{{player.playerId.name}}</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-3">
+                        <label>kind of out
+                            <select ng-model="KindOfOut">
+
+                                <option value="catch">catch</option>
+                                <option value="bold">bold</option>
+                                <option value="lbw">lbw</option>
+                                <option value="runout">runout</option>
+                                <option value="hitwicket">hitwicket</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+                    <div class="columns medium-3">
+                        <label>out by
+                            <select ng-model="outBy">
+
+                                    <option value="{{player.playerId._id}}" ng-repeat="player in ballingTeam.players">{{player.playerId.name}}</option>
+
+                            </select>
+
+
+                        </label>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+            <button type="button"  class="button" ng-click="submitMatchStatus()">Submit Match Status</button>
+        </div>
+    </div>
+</div>

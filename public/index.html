@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<base href="/">
+
+	<title>Cricket Rocks</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.3/foundation-flex.min.css">
+
+
+
+	<!-- JS -->
+	<script src="libs/angular/angular.min.js"></script>
+	<script src="libs/angular-route/angular-route.min.js"></script>
+	
+
+	<!-- ANGULAR CUSTOM -->
+	<script src="js/controllers/playersController.js"></script>
+	<script src="js/controllers/createMatchController.js"></script>
+	<script src="js/controllers/adminMatchController.js"></script>
+	<script src="js/controllers/matchesController.js"></script>
+	<script src="js/controllers/matchMainController.js"></script>
+	<script src="js/services/contactService.js"></script>
+	
+
+	
+	<script src="js/appRoutes.js"></script>
+	<script src="js/app.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+
+
+</head>
+<body ng-app="sampleApp">
+<div class="container">
+	<!-- ANGULAR DYNAMIC CONTENT -->
+	<div ng-view>
+
+
+	</div>
+
+</div>
+</body>
+</html>

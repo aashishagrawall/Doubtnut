@@ -1,0 +1,208 @@
+<style>
+        body {
+            background: #cecece;
+        }
+    
+        .wrapper {
+            background: white;
+            padding: 20px;
+        }
+    </style>
+    
+    <div ng-controller="playersController" class="text-center">
+            <div class="row">
+                    <div class="columns large-7 small-12">
+            
+                        <h2 class="text-center">Add Players (Please select and assign fields no error checking is done)</h2>
+                        <div class="wrapper">
+                            <div class="row">
+                                <div class="columns medium-6">
+                                    <label>Name
+                                        <input type="text" placeholder="Player Name" ng-model="playerName">
+                                    </label>
+                                </div>
+                                <div class="columns medium-6">
+                                    <label>Add role (Multiple role can be selected)
+                                        <select ng-model="playerRole" multiple>
+                                            <option value="batsman">Batman</option>
+                                            <option value="bowler">Bowler</option>
+                                            <option value="wicketkeeper">WicketKeeper</option>
+            
+                                        </select>
+                                    </label>
+            
+                                </div>
+            
+                            </div>
+                            <button type="button" class="success button large" ng-click="AddPlayers()">Add</button>
+                        </div>
+                    </div>
+            
+                    <div class="columns large-5">
+            
+                            <h2 class="text-center">Added players</h2>
+                            <div class="wrapper">
+                                <div class="row" ng-repeat="player in playersData">
+                                    <div class="columns medium-4">
+                                     
+                                   {{player.name}}
+                                       
+                                    </div>
+                                    <div class="columns medium-8">
+                                     
+                                            {{player.playerRole}}
+                                                
+                                  </div>
+                                 
+                
+                                </div>
+                                
+                            </div>
+                            <button type="button" class="success button large" ng-click="SubmitPlayers()">Submit</button>
+                        </div>
+            
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>        
+    
+    
+        <div class="row">
+            <div class="columns large-7 small-12">
+    
+                <h2 class="text-center">Add Venues (Please select and assign fields no error checking is done)</h2>
+                <div class="wrapper">
+                    <div class="row">
+                        <div class="columns medium-6">
+                            <label> stadium Name
+                                <input type="text" placeholder="stadium Name" ng-model="stadiumName">
+                            </label>
+                        </div>
+                        <div class="columns medium-6">
+                                <label> city
+                                        <input type="text" placeholder="city" ng-model="city">
+                                    </label>
+    
+                        </div>
+    
+                    </div>
+                    <button type="button" class="success button large" ng-click="AddVenues()">Add</button>
+                </div>
+            </div>
+    
+            <div class="columns large-5">
+    
+                    <h2 class="text-center">Added Venues</h2>
+                    <div class="wrapper">
+                        <div class="row" ng-repeat="venue in venuesData">
+                            <div class="columns medium-4">
+                             
+                           {{venue.stadiumName}}
+                               
+                            </div>
+                            <div class="columns medium-8">
+                             
+                                    {{venue.city}}
+                                        
+                          </div>
+                         
+        
+                        </div>
+                        
+                    </div>
+                    <button type="button" class="success button large" ng-click="SubmitVenues()">Submit</button>
+                </div>
+    
+        </div>
+        <br>
+        <br>
+        <br>
+        <br> 
+        
+        <button type="button" class="success button large" ng-click="GetAllPlayers()">GetAllPlayers</button>
+
+
+<div class="row">
+    <div class="columns large-7 small-12">
+
+        <h2 class="text-center">Add Teams (Please select and assign fields no error checking is done)</h2>
+        <div class="wrapper">
+            <div class="row">
+                <div class="columns medium-6">
+                    <label> Team Name
+                        <input type="text" placeholder="Team Name" ng-model="teamName">
+                    </label>
+                </div>
+                <div class="columns medium-6">
+                        <label> Country
+                                <input type="text" placeholder="Country" ng-model="teamCountry">
+                            </label>
+
+                </div>
+                <div class="columns medium-6">
+                        <label> team Owner
+                                <input type="text" placeholder="teamOwner" ng-model="teamOwner">
+                            </label>
+
+                </div>
+
+                <div class="columns medium-6">
+                        <label> coach
+                                <input type="text" placeholder="Coach" ng-model="teamCoach">
+                            </label>
+
+                </div>
+                <div class="columns medium-6">
+                        <label> Add players (please select multiple players)
+                                   <select ng-model="teamPlayers" ng-change="changeCaptainPlayers()" multiple>
+                                    
+                                        <option ng-repeat="player in allPlayers" value="{{player._id}}">{{player.name}} {{player.playerRole}}</option>
+        
+                                    </select>
+                            </label>
+
+                </div>
+                <div class="columns medium-6">
+                        <label> select captain
+                                <select ng-model="teamCaptain">
+                                         
+                                        <option ng-repeat="player in captainsPlayers" value="{{player._id}}">{{player.name}} {{player.playerRole}}</option>
+                               
+                                </select>
+                         </label>
+
+                </div>
+
+            </div>
+            <button type="button" class="success button large" ng-click="AddTeams()">Add</button>
+        </div>
+    </div>
+
+    <div class="columns large-5">
+
+            <h2 class="text-center">Added Teams</h2>
+            <div class="wrapper">
+                <div class="row" ng-repeat="team in teamsData">
+                    <div class="columns medium-4">
+                     
+                   {{team.name}}
+                       
+                    </div>
+                    <div class="columns medium-8">
+                     
+                            {{team.country}}
+                                
+                  </div>
+                 
+
+                </div>
+                
+            </div>
+            <button type="button" class="success button large" ng-click="SubmitTeams()">Submit</button>
+        </div>
+
+</div>
+       
+    
+    </div>

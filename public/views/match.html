@@ -1,0 +1,192 @@
+<style text="stylesheet/css">
+  body {
+    background: #f5f5f5;
+  }
+
+  .score {
+    background: white;
+    border: solid 1px grey;
+    padding: 20px;
+    margin: 5px;
+  }
+
+  .inner-score {
+    font-size: 250%;
+    font-weight: bold;
+  }
+
+  .tab-in {
+    padding: 20px;
+  }
+
+  .tabs-content {
+    min-height: 1000px;
+  }
+
+  .over{
+    padding: 5 px;
+    border-radius: 5px; 
+  }
+</style>
+
+<div ng-controller="matchMainController" ng-init="fetchMatchData()" class="text-center">
+  <div class="row">
+    <div class="columns large-12 small-12">
+      <h5 class="text-center">Welcome to cricket Rocks</h5>
+      <h6 class="text-center">We show live scores :)</h6>
+      <h4>A Great Match</h4>
+      <hr>
+      <h1>{{match.team_1.name}} V/S {{match.team_2.name}}</h1>
+
+      <br>
+      Match status: {{match.status}}
+      <div class='toss'>
+        {{match.tossWinner.name}} won toss and choose to {{match.tossWinnerSelection}}
+      </div>
+      <div class="score">
+        <div ng-if="match.tossWinner">
+          <div class="inner-score">
+            {{match.currentStatus.playingTeam.name}} : <span class="run">{{match.currentStatus.totalScore}}</span> -
+            <span>{{match.currentStatus.totalWickets}}</span> (
+            {{match.currentStatus.overNumber ? match.currentStatus.overNumber - 1: 0}}.{{match.currentStatus.ballNumber}} ) overs
+          </div>
+          <div class="opponent">
+            <div ng-if="match.currentStatus.opponentTeam.hasPlayed">
+              {{match.currentStatus.opponentTeam.name}}: {{match.currentStatus.opponentTeam.totalScore}} -
+              {{match.currentStatus.opponentTeam.totalWickets}}
+            </div>
+            <div ng-if="!match.currentStatus.opponentTeam.hasPlayed">
+              {{match.currentStatus.opponentTeam.name}}: Yet to play
+            </div>
+          </div>
+        </div>
+        <div ng-if="!match.tossWinner">
+          Toss is pending
+        </div>
+      </div>
+
+      <ul class="tabs" id="list">
+        <li class="tabs-title" ng-click="setActivePanel('panel1')"><a>Current</a></li>
+        <li class="tabs-title" ng-click="setActivePanel('panel2')"><a>Scorecard</a></li>
+        <li class="tabs-title" ng-click="setActivePanel('panel3')"><a>Stats</a></li>
+      </ul>
+
+      <div class="tabs-content text-left" data-tabs-content="list">
+        <div ng-if="activePanel == 'panel3'" id="panel1" class="tab-in">
+          Csk rocks
+        </div>
+        <div ng-if="activePanel == 'panel1'" id="panel1" class="tab-in">
+          Current
+          <div class="row">
+            <div class="columns small-6">
+              <table>
+                <thead>
+                  <tr>
+                    <th width=10>Striker</th>
+                    <th>Player</th>
+                    <th>Runs</th>
+                    <th>Balls</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>*</td>
+                    <td>{{match.currentStatus.balls.striker.name}}</td>
+                    <td>{{match.currentStatus.balls.striker.score.runs}}</td>
+                    <td>{{match.currentStatus.balls.striker.score.balls}}</td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td>{{match.currentStatus.balls.nonStriker.name}}</td>
+                    <td>{{match.currentStatus.balls.nonStriker.score.runs}}</td>
+                    <td>{{match.currentStatus.balls.nonStriker.score.balls}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br>
+          Bowler: {{match.currentStatus.balls.overId.bowler.name}}
+          <br>
+          <br>
+          Over: <span ng-repeat="ball in match.currentStatus.balls.overId.balls"
+            class="hollow button over">{{ball.runScored + ' + ' + ball.extrasScored+ "" + ball.extraReason}}</span>
+          <hr>
+          Extras : <span ng-repeat="extra in match.currentStatus.extras">{{extra.extrasScored}}-{{extra.extraReason}} ,
+          </span>
+
+
+
+        </div>
+        <div ng-if="activePanel == 'panel2'" id="panel2" class="tab-in">
+          Scorecard
+          <div class="scorecard" ng-repeat='team in match.Scorecard'>
+            <br>
+            <h4>{{team.name}}</h4>
+            Batting:
+            <div ng-if="!team.hasBat">
+              Team has not bat
+            </div>
+            <div ng-if="team.hasBat">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th></th>
+                    <th>Runs</th>
+                    <th>4s</th>
+                    <th>6s</th>
+                    <th>Balls</th>
+                    <th>Strike Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="player in team.batScoreCard">
+                    <td>{{player.name}}<strong>{{!player.out && player.hasBat ? '*' : ''}}</strong></td>
+                    <td>{{player.hasBat ? '' : 'not-played' }}</td>
+                    <td>{{player.runs}}</td>
+                    <td>{{player.fours}}</td>
+                    <td>{{player.sixes}}</td>
+                    <td>{{player.balls}}</td>
+                    <td>{{player.strikeRate}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <br>
+            Balling:
+            <div ng-if="!team.hasBall">
+              Team has not bowl
+            </div>
+            <div ng-if="team.hasBall">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th>Runs</th>
+                    <th>Overs</th>
+                    <th>Wickets</th>
+                    <th>Economy</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="player in team.ballScoreCard">
+                    <td>{{player.name}}</td>
+                    <td>{{player.gaveRuns}}</td>
+                    <td>{{player.overs}}</td>
+                    <td>{{player.wickets}}</td>
+                    <td>{{player.economy}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br>
+            <hr>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
