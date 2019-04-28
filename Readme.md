@@ -1,9 +1,7 @@
 
 1. use 'npm install' to install all dependencies.
-2.  Web app is made using MEAN stack 
-3.  Used msg91 for messaging
+2.run npm start to run project
 
+3. visit localhost:4000/home to find all relevant link
 
-
-SITE IS LIVE ON
-  'https://thawing-temple-37855.herokuapp.com/'
+4.Also watch video to know hot to use admin site provided you with the email
