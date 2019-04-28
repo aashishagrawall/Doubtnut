@@ -152,7 +152,7 @@ exports.createMatch = async function (req, res) {
   try {
     let matchData = req.body.match;
 
-    matchData.numberOfOvers = matchData.matchType == "t20" ? 20 : 50;
+    matchData.numberOfOvers = matchData.matchType == "t20" ? 2 : 2;
     let matchModel = new models.Match(matchData);
     let matchSave = await matchModel.save();
 
